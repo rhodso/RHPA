@@ -52,17 +52,6 @@
             }
           }
         }
-      },
-      "runtimes": {
-        "win": {
-          "#import": []
-        },
-        "win-x64": {
-          "#import": []
-        },
-        "win-x86": {
-          "#import": []
-        }
       }
     },
     "C:\\!Prog\\RHPA\\RHPA\\RHPA\\RHPA.csproj": {
