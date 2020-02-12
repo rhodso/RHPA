@@ -199,7 +199,7 @@ namespace RHPA {
 
         async private void EditAlertAction(object Sender, EventArgs args)
         {
-            DisplayAlert("Button pressed", "'Edit Alert' button pressed", "OK");
+            await Navigation.PushAsync(new EditAlert());
         }
 
         async private void DrivingModeAction(object Sender, EventArgs args)
