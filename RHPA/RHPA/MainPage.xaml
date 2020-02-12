@@ -7,10 +7,14 @@
              x:Class="RHPA.MainPage">
 
     <StackLayout>
-        <!-- Place new controls here -->
+          
+        <!-- This file is no longer in use because programming the UI in C# is easier -->
+        
+        <!--
         <Label Text="Welcome to Xamarin.Forms!" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+        -->
     </StackLayout>
 
 </ContentPage>

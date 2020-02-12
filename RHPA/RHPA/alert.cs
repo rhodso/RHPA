@@ -4,8 +4,8 @@ using System.Text;
 
 namespace RHPA {
     class Alert {
-        private double lat;
-        private double lon;
+        private string lat;
+        private string lon;
         private string alertType;
         private int user;
         private int proximity;
@@ -13,7 +13,7 @@ namespace RHPA {
         private DateTime startTime;
         private bool active;
 
-        public Alert(double lat,double lon,string type,int proximity,DateTime exipryTime) {
+        public Alert(string lat,string lon,string type,int proximity,DateTime exipryTime) {
             this.lat=lat;
             this.lon=lon;
             this.alertType=type;
@@ -21,6 +21,16 @@ namespace RHPA {
             this.exipryTime=exipryTime;
             this.startTime=DateTime.Now;
             this.active=getActive();
+        }
+
+        public Alert(string lat,string lon,string type,int proximity,DateTime exipryTime,bool isActive){
+            this.lat=lat;
+            this.lon=lon;
+            this.alertType=type;
+            this.proximity=proximity;
+            this.exipryTime=exipryTime;
+            this.startTime=DateTime.Now;
+            this.active=isActive;
         }
 
         public bool getActive() {
@@ -34,10 +44,10 @@ namespace RHPA {
         public DateTime GetStartTime() {
             return startTime;
         }
-        public double GetLat() {
+        public string GetLat() {
             return lat;
         }
-        public double GetLon() {
+        public string GetLon() {
             return lon;
         }
         public string GetAlertType() {
@@ -52,10 +62,10 @@ namespace RHPA {
         public void SetExipryTime(DateTime value) {
             exipryTime=value;
         }
-        public void SetLat(double value) {
+        public void SetLat(string value) {
             lat=value;
         }
-        public void SetLon(double value) {
+        public void SetLon(string value) {
             lon=value;
         }
         public void SetAlertType(string value) {

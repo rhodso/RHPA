@@ -97,13 +97,40 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
+    <AndroidAsset Include="Assets\BlackBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RHPA\RHPA.csproj">
       <Project>{F988C5E8-E1C4-45B6-897E-2290E6B371FE}</Project>
       <Name>RHPA</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\BlackBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\NoBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\settings_gear_dark_theme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\settings_gear_light_theme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\WhiteBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\NoBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\settings_gear_dark_theme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\settings_gear_light_theme.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\WhiteBackground.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
