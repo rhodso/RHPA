@@ -204,7 +204,7 @@ namespace RHPA {
 
         async private void DrivingModeAction(object Sender, EventArgs args)
         {
-            DisplayAlert("Button pressed", "'Driving Mode' button pressed", "OK");
+            await Navigation.PushAsync(new DrivingMode());
         }
 
         async private void SettingsAction(object Sender, EventArgs args)

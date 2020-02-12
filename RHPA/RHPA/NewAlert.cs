@@ -115,10 +115,12 @@ namespace RHPA {
             content.Children.Add(grid);
 
             //1st spacing label
+            /*
             Label l1 = new Label() {
                 Text="",
                 HeightRequest=25
             };
+            */
 
             //Add alert button
             var addAlertButton = new Button();
