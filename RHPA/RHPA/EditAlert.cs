@@ -31,9 +31,7 @@ namespace RHPA {
 
         StackLayout BuildContent() {
             //Create content
-            StackLayout co = new StackLayout();
             StackLayout content = new StackLayout();
-            ScrollView con = new ScrollView();
 
             //Create a list of views and a grid for the views
             gridViews=new List<View>();
@@ -122,9 +120,7 @@ namespace RHPA {
             updateAlertButton.Clicked+=async (sender,args) => UpdateAlertButtonClicked();
             content.Children.Add(updateAlertButton);
 
-            con.Content=content;
-            co.Children.Add(con);
-            return co;
+            return content;
         }
 
         async void UpdateAlertButtonClicked() {

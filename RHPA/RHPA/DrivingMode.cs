@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 
 using Xamarin.Forms;
@@ -9,8 +10,10 @@ namespace RHPA {
     public class DrivingMode : ContentPage {
 
         ControlVars c = new ControlVars();
+        serverConnection conn = new serverConnection();
         List<View> gridViews;
         List<string> alertTypes;
+        Label alertsLabel;
 
         private readonly string darkModeButtonColor = "4F4F4F";
         private readonly string lightModeButtonColor = "AAAAAA";
@@ -28,9 +31,7 @@ namespace RHPA {
 
         StackLayout BuildContent() {
             //Create content
-            StackLayout co = new StackLayout();
             StackLayout content = new StackLayout();
-            ScrollView con = new ScrollView();
 
             //Create a list of views and a grid for the views
             gridViews=new List<View>();
@@ -74,9 +75,10 @@ namespace RHPA {
             //Add the grid
             content.Children.Add(grid);
 
-            con.Content=content;
-            co.Children.Add(con);
-            return co;
+            //Add the alerts label
+            alertsLabel=new Label() { Text="",TextColor=textCol, FontSize=18,VerticalOptions=LayoutOptions.FillAndExpand, HorizontalOptions=LayoutOptions.FillAndExpand};
+
+            return content;
         }
 
         private List<string> getAlertTypes() {
@@ -87,6 +89,17 @@ namespace RHPA {
             aList.Add("Road Obstruction");
             aList.Add("Other");
             return aList;
+        }
+
+        void checkForUpdate() {
+            try {
+                string reply = conn.sendRevcMessage("1|"+getLon()+"|"+getLat());
+
+            } catch(ArgumentNullException e) {
+
+            } catch(SocketException e) {
+                   
+            }
         }
 
         private string getLon() {

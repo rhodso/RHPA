@@ -31,9 +31,7 @@ namespace RHPA {
 
         StackLayout BuildContent() {
             //Create content
-            StackLayout co = new StackLayout();
             StackLayout content = new StackLayout();
-            ScrollView con = new ScrollView();
 
             //Add the "Defaults button"
             var defaults = new Button();
@@ -135,9 +133,7 @@ namespace RHPA {
             addAlertButton.Clicked+=async (sender,args) => CreateAlertButtonClicked();
             content.Children.Add(addAlertButton);
 
-            con.Content=content;
-            co.Children.Add(con);
-            return co;
+            return content;
         }
 
         async void DefaultsButtonClicked() {

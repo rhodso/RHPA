@@ -11,7 +11,9 @@ namespace RHPA {
 
             //Initialise control vars
             ControlVars c = new ControlVars();
-            //c.setLightMode(true);
+
+            //Initialise server connection
+            serverConnection conn = new serverConnection("192.168.1.1",5000);
 
             //MainPage = new MainPage();
             MainPage=new NavigationPage(new MainPage());
