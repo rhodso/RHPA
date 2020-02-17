@@ -7,12 +7,10 @@ using Xamarin.Essentials;
 
 namespace RHPA {
 
-    class locationHandler {
-
-        LocationManager lm;
+    public class locationHandler{
+        
         public locationHandler(LocationManager locationManager) {
-            this.lm=locationManager;
-
+            
         }
 
         static public bool testLocation() {

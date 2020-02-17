@@ -92,14 +92,48 @@ namespace RHPA {
         }
 
         void checkForUpdate() {
+            string decodedReply = null;
             try {
+                //Recieve reply
                 string reply = conn.sendRevcMessage("1|"+getLon()+"|"+getLat());
 
-            } catch(ArgumentNullException e) {
+                //Split up hazards
+                string[] hazards = reply.Split('|');
 
+                List<string[]> hazardsList = new List<string[]>(0);
+
+                foreach(string s in hazards) {
+                    //hazardsList.Add(s.Split(','));
+                    List<string> hazardInfo = new List<string>(0);
+                    string[] str = s.Split(',');
+                    foreach(string stri in str) {
+                        hazardInfo.Add(stri);
+                    }
+                    try {
+                        hazardInfo.Add(DistanceAlgorithm.DistanceBetweenPlaces(
+                            double.Parse(str[0]),
+                            double.Parse(str[1]),
+                            double.Parse(getLat()),
+                            double.Parse(getLon())).ToString());
+                    } catch(Exception ex) { }
+                    hazardsList.Add(hazardInfo.ToArray());
+                }
+
+
+
+
+                //Get hazard type
+
+                //Assign to decodedReply
+
+
+            } catch(ArgumentNullException e) {
+                    //Handle this somehow
             } catch(SocketException e) {
-                   
+                   //Handle this somehow
             }
+
+            alertsLabel.Text=decodedReply;
         }
 
         private string getLon() {
