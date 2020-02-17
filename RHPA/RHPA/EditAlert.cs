@@ -15,12 +15,9 @@ namespace RHPA {
         TimePicker endTime;
         List<string> alertTypes;
 
-        private readonly string darkModeButtonColor = "4F4F4F";
-        private readonly string lightModeButtonColor = "AAAAAA";
-
         public EditAlert() {
             Content=BuildContent();
-            alertTypes=getAlertTypes();
+            alertTypes=c.getAlertTypes();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;
@@ -99,22 +96,14 @@ namespace RHPA {
             //Add the grid
             content.Children.Add(grid);
 
-            //1st spacing label
-            /*
-            Label l1 = new Label() {
-                Text="",
-                HeightRequest=25
-            };
-            */
-
             //Add alert button
             var updateAlertButton = new Button();
             updateAlertButton.Text="Update alert";
             if(c.getLightMode()) {
-                updateAlertButton.BackgroundColor=Color.FromHex(lightModeButtonColor);
+                updateAlertButton.BackgroundColor=Color.FromHex(c.getLightModeButtonColor());
                 updateAlertButton.TextColor=Color.Black;
             } else {
-                updateAlertButton.BackgroundColor=Color.FromHex(darkModeButtonColor);
+                updateAlertButton.BackgroundColor=Color.FromHex(c.getDarkModeButtonColor());
                 updateAlertButton.TextColor=Color.White;
             }
             updateAlertButton.Clicked+=async (sender,args) => UpdateAlertButtonClicked();
@@ -155,16 +144,6 @@ namespace RHPA {
                     await DisplayAlert("Error","Could not create alert\n"+e.Message,"OK");
                 }
             }
-        }
-
-        private List<string> getAlertTypes() {
-            List<string> aList = new List<string>();
-            aList.Add("Collision");
-            aList.Add("Horse Rider");
-            aList.Add("Road Work");
-            aList.Add("Road Obstruction");
-            aList.Add("Other");
-            return aList;
         }
 
         private string getLon() {

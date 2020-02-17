@@ -20,7 +20,7 @@ namespace RHPA {
 
         public DrivingMode() {
             Content=BuildContent();
-            alertTypes=getAlertTypes();
+            alertTypes=c.getAlertTypes();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;
@@ -84,16 +84,7 @@ namespace RHPA {
             return content;
         }
 
-        private List<string> getAlertTypes() {
-            List<string> aList = new List<string>();
-            aList.Add("Collision");
-            aList.Add("Horse Rider");
-            aList.Add("Road Work");
-            aList.Add("Road Obstruction");
-            aList.Add("Other");
-            return aList;
-        }
-
+        
         /*
         void checkForUpdate() {
             string decodedReply = null;

@@ -15,12 +15,9 @@ namespace RHPA {
         TimePicker endTime;
         List<string> alertTypes;
 
-        private readonly string darkModeButtonColor = "4F4F4F";
-        private readonly string lightModeButtonColor = "AAAAAA";
-
         public NewAlert() {
             Content=BuildContent();
-            alertTypes=getAlertTypes();
+            alertTypes=c.getAlertTypes();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;
@@ -37,10 +34,10 @@ namespace RHPA {
             var defaults = new Button();
             defaults.Text="Use Defaults";
             if(c.getLightMode()) {
-                defaults.BackgroundColor=Color.FromHex(lightModeButtonColor);
+                defaults.BackgroundColor=Color.FromHex(c.getLightModeButtonColor());
                 defaults.TextColor=Color.Black;
             } else {
-                defaults.BackgroundColor=Color.FromHex(darkModeButtonColor);
+                defaults.BackgroundColor=Color.FromHex(c.getDarkModeButtonColor());
                 defaults.TextColor=Color.White;
             }
             defaults.Clicked+=async (sender,args) => DefaultsButtonClicked();
@@ -124,10 +121,10 @@ namespace RHPA {
             var addAlertButton = new Button();
             addAlertButton.Text="Add alert";
             if(c.getLightMode()) {
-                addAlertButton.BackgroundColor=Color.FromHex(lightModeButtonColor);
+                addAlertButton.BackgroundColor=Color.FromHex(c.getLightModeButtonColor());
                 addAlertButton.TextColor=Color.Black;
             } else {
-                addAlertButton.BackgroundColor=Color.FromHex(darkModeButtonColor);
+                addAlertButton.BackgroundColor=Color.FromHex(c.getDarkModeButtonColor());
                 addAlertButton.TextColor=Color.White;
             }
             addAlertButton.Clicked+=async (sender,args) => CreateAlertButtonClicked();
@@ -138,7 +135,7 @@ namespace RHPA {
 
         async void DefaultsButtonClicked() {
             if(c.getDefAlert()!=null) {
-                List<string> alertTypes = getAlertTypes();
+                List<string> alertTypes = c.getAlertTypes();
                 int idx = alertTypes.IndexOf(c.getDefAlert().GetAlertType());
                 alertTypePicker.SelectedIndex=5;
                 TimeSpan duration = c.getDefAlert().GetStartTime()-c.getDefAlert().GetExipryTime();
@@ -180,16 +177,6 @@ namespace RHPA {
                     await DisplayAlert("Error","Could not create alert\n" + e.Message,"OK");
                 } 
             }
-        }
-
-        private List<string> getAlertTypes() {
-            List<string> aList = new List<string>();
-            aList.Add("Collision");
-            aList.Add("Horse Rider");
-            aList.Add("Road Work");
-            aList.Add("Road Obstruction");
-            aList.Add("Other");
-            return aList;
         }
 
         private string getLon() {

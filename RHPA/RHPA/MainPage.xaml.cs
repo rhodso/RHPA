@@ -209,6 +209,6 @@ namespace RHPA {
 
         async private void SettingsAction(object Sender, EventArgs args)
         {
-            DisplayAlert("Button pressed", "'Settings' button pressed", "OK");
+            await Navigation.PushAsync(new Settings());
         }
     }}

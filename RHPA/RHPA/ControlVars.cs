@@ -8,6 +8,8 @@ namespace RHPA {
         private static bool lightMode;
         private static Alert myAlert;
         private static Alert defaultAlert;
+        private string darkModeButtonColor = "4F4F4F";
+        private string lightModeButtonColor = "AAAAAA";
 
         //Getters
         public bool getLightMode() {
@@ -19,7 +21,21 @@ namespace RHPA {
         public Alert getDefAlert() {
             return defaultAlert;
         }
-
+        public List<string> getAlertTypes() {
+            List<string> aList = new List<string>();
+            aList.Add("Collision");
+            aList.Add("Horse Rider");
+            aList.Add("Road Work");
+            aList.Add("Road Obstruction");
+            aList.Add("Other");
+            return aList;
+        }
+        public string getDarkModeButtonColor() {
+            return darkModeButtonColor;
+        }
+        public string getLightModeButtonColor() {
+            return lightModeButtonColor;
+        }
         //Setters
         public void setLightMode(bool b) {
             lightMode=b;
