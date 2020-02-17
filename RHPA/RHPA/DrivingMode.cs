@@ -46,10 +46,7 @@ namespace RHPA {
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width=new GridLength(1,GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height=GridLength.Auto });
             grid.RowDefinitions.Add(new RowDefinition { Height=GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height=GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height=GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height=GridLength.Auto });
-
+            
             Color textCol;
 
             if(c.getLightMode()) {
@@ -61,23 +58,29 @@ namespace RHPA {
             //Add variable views
             TimeSpan ts = DateTime.Now.TimeOfDay;
             ts.Add(TimeSpan.FromHours(1));
-
+            
             //Add views
             gridViews.Add(new Label { Text="Latitude",Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
             gridViews.Add(new Label { Text=getLat(),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
             gridViews.Add(new Label { Text="Longitude",Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
             gridViews.Add(new Label { Text=getLon(),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
-
+            
+            //Add views to grid
+            grid.Children.Add(gridViews[0],0,0);
+            grid.Children.Add(gridViews[1],1,0);
+            grid.Children.Add(gridViews[2],0,1);
+            grid.Children.Add(gridViews[3],1,1);
+            
             //Set Spans
             Grid.SetColumnSpan(gridViews[1],2);
             Grid.SetColumnSpan(gridViews[3],2);
-
+            
             //Add the grid
             content.Children.Add(grid);
 
-            //Add the alerts label
-            alertsLabel=new Label() { Text="",TextColor=textCol, FontSize=18,VerticalOptions=LayoutOptions.FillAndExpand, HorizontalOptions=LayoutOptions.FillAndExpand};
-
+            Label alertsLabel = new Label() { Text="App is in driving mode\nYou will be audibly alerted to any hazards as to not distract you while driving",HorizontalOptions=LayoutOptions.FillAndExpand,VerticalOptions=LayoutOptions.StartAndExpand,Margin=5,TextColor=textCol,FontSize=18,VerticalTextAlignment=TextAlignment.Start };
+            content.Children.Add(alertsLabel);
+                
             return content;
         }
 
@@ -91,6 +94,7 @@ namespace RHPA {
             return aList;
         }
 
+        /*
         void checkForUpdate() {
             string decodedReply = null;
             try {
@@ -119,14 +123,6 @@ namespace RHPA {
                     hazardsList.Add(hazardInfo.ToArray());
                 }
 
-
-
-
-                //Get hazard type
-
-                //Assign to decodedReply
-
-
             } catch(ArgumentNullException e) {
                     //Handle this somehow
             } catch(SocketException e) {
@@ -135,6 +131,7 @@ namespace RHPA {
 
             alertsLabel.Text=decodedReply;
         }
+        */
 
         private string getLon() {
             return locationHandler.getLongitude();

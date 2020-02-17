@@ -109,7 +109,7 @@ namespace RHPA {
 
             //Add alert button
             var updateAlertButton = new Button();
-            updateAlertButton.Text="Add alert";
+            updateAlertButton.Text="Update alert";
             if(c.getLightMode()) {
                 updateAlertButton.BackgroundColor=Color.FromHex(lightModeButtonColor);
                 updateAlertButton.TextColor=Color.Black;
