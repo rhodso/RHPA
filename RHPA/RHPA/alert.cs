@@ -34,6 +34,9 @@ namespace RHPA {
         }
 
         public bool getActive() {
+            if(this.lat.Equals("NONE")) {
+                return false;
+            }
             bool isActive = TimeSpan.Parse(DateTime.Now.ToString())>TimeSpan.Parse(DateTime.Now.ToString());
             this.active=isActive;
             return isActive;

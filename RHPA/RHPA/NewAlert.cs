@@ -84,7 +84,12 @@ namespace RHPA {
             TimeSpan ts = DateTime.Now.TimeOfDay;
             ts.Add(TimeSpan.FromHours(1));
             endTime=new TimePicker { Time=(ts),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
-            alertTypePicker=new Picker { ItemsSource=alertTypes,Margin=5,SelectedIndex=0,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
+            alertTypePicker=new Picker { Margin=5,SelectedIndex=0,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
+            var items = new List<string>();
+            foreach(string s in c.getAlertTypes()) {
+                items.Add(s);
+            }
+            alertTypePicker.ItemsSource=items;
             proximityEntry=new Entry { Keyboard=Keyboard.Numeric,Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
 
             //Add views
@@ -166,9 +171,11 @@ namespace RHPA {
             if(proximityEntry.Text.Equals("")) {
                 errorStr+="Proximity not set\n";
             }
-            if(endTime.Time<=TimeSpan.Parse(DateTime.Now.ToString())) {
+            
+            if(endTime.Time <= c.dateTimeToTimeSpan(DateTime.Now)) {
                 errorStr+="End time is before start time\n";
             }
+            
             //If things aren't set, show error
             //If they are then create an alert
             if(!errorStr.Equals("")) {

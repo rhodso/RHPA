@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Xamarin.Forms;
 
 namespace RHPA {
@@ -14,6 +14,7 @@ namespace RHPA {
         Entry durationEntry;
         TimePicker endTime;
         List<string> alertTypes;
+
 
         public EditAlert() {
             Content=BuildContent();
@@ -60,6 +61,11 @@ namespace RHPA {
             ts.Add(TimeSpan.FromHours(1));
             endTime=new TimePicker { Time=(ts),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
             alertTypePicker=new Picker { ItemsSource=alertTypes,Margin=5,SelectedIndex=0,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
+            var items = new List<string>();
+            foreach(string s in c.getAlertTypes()) {
+                items.Add(s);
+            }
+            alertTypePicker.ItemsSource=items;
             proximityEntry=new Entry { Keyboard=Keyboard.Numeric,Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
 
             //Add views
@@ -153,5 +159,11 @@ namespace RHPA {
         private string getLat() {
             return locationHandler.getLatidute();
         }
+
+        async void UpdateAsync(CancellationToken ct) {
+            
+        }
+
+        
     }
 }

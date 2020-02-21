@@ -46,5 +46,19 @@ namespace RHPA {
         public void setDefAlert(Alert a) {
             defaultAlert=a;
         }
+
+        public TimeSpan dateTimeToTimeSpan(DateTime date) {
+            TimeSpan ts;
+            long Timestamp = date.Ticks-new DateTime(1970,1,1).Ticks;
+            Timestamp/=TimeSpan.TicksPerSecond;
+            ts = TimeSpan.FromTicks(Timestamp);
+            return ts;
+        }
+
+        public DateTime timeSpanToDateTime(TimeSpan _ts) {
+            double dTimeSpan = Convert.ToDouble(_ts);
+            DateTime dtReturn = new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc).AddSeconds(Math.Round(dTimeSpan/1000d)).ToLocalTime();
+            return dtReturn;
+        }
     }
 }
