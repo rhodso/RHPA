@@ -31,6 +31,9 @@ namespace RHPA {
         {
             if(!locationHandler.testLocation()) {
                 BackgroundColor=Color.Gray;
+                StackLayout sl = new StackLayout();
+                sl.Children.Add(new Label() { Text="An error has occured and location is not available" });
+                Content=sl;
             } else {
                 //Setup
                 lightMode=controlVars.getLightMode();

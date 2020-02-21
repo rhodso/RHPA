@@ -8,20 +8,46 @@ using Xamarin.Essentials;
 namespace RHPA {
 
     public class locationHandler{
-        
-        public locationHandler(LocationManager locationManager) {
-            
+
+        static string longitude;
+        static string latitude;
+
+        public locationHandler() {
+            longitude="ALongitude";
+            latitude="ALatitude";
+        }
+
+        public static async void getLocation() {
+            try {
+                var request = new GeolocationRequest(GeolocationAccuracy.High);
+                Xamarin.Essentials.Location location = await Geolocation.GetLocationAsync(request);
+
+                if(location!=null) {
+                    longitude=location.Longitude.ToString();
+                    latitude=location.Latitude.ToString();
+                } else {
+                    longitude="ALongitude";
+                    latitude="ALatitude";
+                }
+            } catch(Exception e) {
+                throw e;
+            }    
         }
 
         static public bool testLocation() {
-            return true;
+            getLocation();
+            if(latitude=="ALatitude") {
+                return false;
+            } else {
+                return true;
+            }
         }
         static public string getLongitude() {
             //For now
-            return "ALongitude";
+            return longitude;
         }
         static public string getLatidute() {
-            return "ALatitude";
+            return latitude;
         }
 
 

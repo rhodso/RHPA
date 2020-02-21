@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RHPA {
@@ -16,6 +16,18 @@ namespace RHPA {
         List<string> alertTypes;
 
         public NewAlert() {
+            try {
+                locationHandler.getLocation();
+            } catch(FeatureNotSupportedException fnsEx) {
+                DisplayAlert("Error","Feature not supported on device","OK");
+            } catch(FeatureNotEnabledException fneEx) {
+                DisplayAlert("Error","Feature not enabled on device","OK");
+            } catch(PermissionException pEx) {
+                DisplayAlert("Error","Permissions not granted","OK");
+            } catch(Exception ex) {
+                DisplayAlert("Error","Unknown error, details:\n" + ex.Message,"OK");
+            }
+
             Content=BuildContent();
             alertTypes=c.getAlertTypes();
 

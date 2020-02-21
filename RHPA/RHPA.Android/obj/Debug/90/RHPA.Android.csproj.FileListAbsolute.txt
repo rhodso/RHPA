@@ -548,3 +548,4 @@ C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\res\drawable\nobackground.png
 C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\res\drawable\settings_gear_dark_theme.png
 C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\res\drawable\settings_gear_light_theme.png
 C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\res\drawable\whitebackground.png
+C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\stamp\SetupDependenciesForDesigner.stamp
