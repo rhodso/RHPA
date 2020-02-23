@@ -18,7 +18,7 @@ namespace RHPA {
             c.setAlert(new Alert("NONE","NONE","NONE",0,DateTime.Now,false));
 
             //Initialise server connection
-            serverConnection conn = new serverConnection("192.168.1.1",5000);
+            serverConnection conn = new serverConnection();
 
             //MainPage = new MainPage();
             MainPage=new NavigationPage(new MainPage());
