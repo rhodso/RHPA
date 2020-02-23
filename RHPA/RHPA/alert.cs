@@ -7,7 +7,7 @@ namespace RHPA {
         private string lat;
         private string lon;
         private string alertType;
-        private int user;
+        private User user;
         private int proximity;
         private DateTime exipryTime;
         private DateTime startTime;
@@ -56,7 +56,7 @@ namespace RHPA {
         public string GetAlertType() {
             return alertType;
         }
-        public int GetUser() {
+        public User GetUser() {
             return user;
         }
         public int GetProximity() {
@@ -74,13 +74,33 @@ namespace RHPA {
         public void SetAlertType(string value) {
             alertType=value;
         }
-        public void SetUser(int value) {
-            user=value;
+        public void SetUser(User _user) {
+            user=_user;
         }
         public void SetProximity(int value) {
             proximity=value;
         }
 
+        public static string getAlertTypeNameFromID(int alertTypeID) {
+            alertTypeID++; //Add one to match server
+            ControlVars c = new ControlVars();
+            List<string> alertTypes = c.getAlertTypes();
+            return alertTypes[alertTypeID];
+        }
+        public static int getAlertTypeIDFromName(string alertTypeName) {
+            ControlVars c = new ControlVars();
+            List<string> alertTypes = c.getAlertTypes();
+            int index = 1;
+            foreach(string s in alertTypes) {
+                if(s.Equals(alertTypeName)) {
+                    return index;
+                } else {
+                    index++;
+                }
+            }
+            //If not found
+            return -1;
+        }
     }
 
 }

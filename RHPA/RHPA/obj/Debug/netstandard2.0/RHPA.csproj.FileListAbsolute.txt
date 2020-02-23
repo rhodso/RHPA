@@ -10,7 +10,6 @@ C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
 C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\RHPA.AssemblyInfoInputs.cache
 C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\RHPA.AssemblyInfo.cs
-C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\XamlC.stamp
 C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\RHPA.csproj.CopyComplete
 C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\RHPA.dll
 C:\!Prog\RHPA\RHPA\RHPA\obj\Debug\netstandard2.0\ref\RHPA.dll

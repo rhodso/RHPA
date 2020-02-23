@@ -22,13 +22,17 @@ namespace RHPA {
             return defaultAlert;
         }
         public List<string> getAlertTypes() {
+            //Temporary            
             List<string> aList = new List<string>();
-            aList.Add("Collision");
-            aList.Add("Horse Rider");
-            aList.Add("Road Work");
-            aList.Add("Road Obstruction");
+            aList.Add("Road Traffic Accident");
+            aList.Add("Horse Riders");
+            aList.Add("Hedge Cutter");
+            aList.Add("Flood");
             aList.Add("Other");
             return aList;
+
+            //In future, get this from the server
+
         }
         public string getDarkModeButtonColor() {
             return darkModeButtonColor;
