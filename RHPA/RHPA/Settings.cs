@@ -16,7 +16,7 @@ namespace RHPA {
 
         public Settings() {
             Content=buildContent();
-            alertTypes=c.getAlertTypes();
+            alertTypes=c.getAlertTypeDescriptions();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;

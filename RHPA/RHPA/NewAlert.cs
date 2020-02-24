@@ -29,7 +29,7 @@ namespace RHPA {
             }
 
             Content=BuildContent();
-            alertTypes=c.getAlertTypes();
+            alertTypes=c.getAlertTypeDescriptions();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;
@@ -86,7 +86,7 @@ namespace RHPA {
             endTime=new TimePicker { Time=(ts),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
             alertTypePicker=new Picker { Margin=5,SelectedIndex=0,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
             var items = new List<string>();
-            foreach(string s in c.getAlertTypes()) {
+            foreach(string s in c.getAlertTypeDescriptions()) {
                 items.Add(s);
             }
             alertTypePicker.ItemsSource=items;
@@ -152,7 +152,7 @@ namespace RHPA {
 
         async void DefaultsButtonClicked() {
             if(c.getDefAlert()!=null) {
-                List<string> alertTypes = c.getAlertTypes();
+                List<string> alertTypes = c.getAlertTypeDescriptions();
                 int idx = alertTypes.IndexOf(c.getDefAlert().GetAlertType());
                 alertTypePicker.SelectedIndex=5;
                 TimeSpan duration = c.getDefAlert().GetStartTime()-c.getDefAlert().GetExipryTime();

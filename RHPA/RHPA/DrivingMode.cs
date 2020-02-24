@@ -20,7 +20,7 @@ namespace RHPA {
 
         public DrivingMode() {
             Content=BuildContent();
-            alertTypes=c.getAlertTypes();
+            alertTypes=c.getAlertTypeDescriptions();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;

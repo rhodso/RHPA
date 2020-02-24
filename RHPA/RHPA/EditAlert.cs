@@ -18,7 +18,7 @@ namespace RHPA {
 
         public EditAlert() {
             Content=BuildContent();
-            alertTypes=c.getAlertTypes();
+            alertTypes=c.getAlertTypeDescriptions();
 
             if(c.getLightMode()) {
                 BackgroundColor=Color.White;
@@ -62,7 +62,7 @@ namespace RHPA {
             endTime=new TimePicker { Time=(ts),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
             alertTypePicker=new Picker { ItemsSource=alertTypes,Margin=5,SelectedIndex=0,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
             var items = new List<string>();
-            foreach(string s in c.getAlertTypes()) {
+            foreach(string s in c.getAlertTypeDescriptions()) {
                 items.Add(s);
             }
             alertTypePicker.ItemsSource=items;

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace RHPA {
     class Alert {
+        private int alertID;
         private string lat;
         private string lon;
         private string alertType;
@@ -33,6 +34,9 @@ namespace RHPA {
             this.active=isActive;
         }
 
+        public int getID() {
+            return alertID;
+        }
         public bool getActive() {
             if(this.lat.Equals("NONE")) {
                 return false;
@@ -62,6 +66,9 @@ namespace RHPA {
         public int GetProximity() {
             return proximity;
         }
+        public void setID(int _alertID) {
+            alertID=_alertID;
+        }
         public void SetExipryTime(DateTime value) {
             exipryTime=value;
         }
@@ -84,12 +91,12 @@ namespace RHPA {
         public static string getAlertTypeNameFromID(int alertTypeID) {
             alertTypeID++; //Add one to match server
             ControlVars c = new ControlVars();
-            List<string> alertTypes = c.getAlertTypes();
+            List<string> alertTypes = c.getAlertTypeDescriptions();
             return alertTypes[alertTypeID];
         }
         public static int getAlertTypeIDFromName(string alertTypeName) {
             ControlVars c = new ControlVars();
-            List<string> alertTypes = c.getAlertTypes();
+            List<string> alertTypes = c.getAlertTypeDescriptions();
             int index = 1;
             foreach(string s in alertTypes) {
                 if(s.Equals(alertTypeName)) {

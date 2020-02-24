@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RHPA {
     class ControlVars {
@@ -10,6 +11,7 @@ namespace RHPA {
         private static Alert defaultAlert;
         private string darkModeButtonColor = "4F4F4F";
         private string lightModeButtonColor = "AAAAAA";
+        private List<alertTypeObject> alertTypes;
 
         //Getters
         public bool getLightMode() {
@@ -21,18 +23,31 @@ namespace RHPA {
         public Alert getDefAlert() {
             return defaultAlert;
         }
-        public List<string> getAlertTypes() {
-            //Temporary            
+        public List<string> getAlertTypeDescriptions() {
             List<string> aList = new List<string>();
+
+            /*
+            //Temporary            
             aList.Add("Road Traffic Accident");
             aList.Add("Horse Riders");
             aList.Add("Hedge Cutter");
             aList.Add("Flood");
             aList.Add("Other");
             return aList;
+            */
 
-            //In future, get this from the server
-
+            //Get from server
+            List<alertTypeObject> alertTypeObjects = getAlertTypeList();
+            foreach(alertTypeObject a in alertTypeObjects) {
+                aList.Add(a.getDescription());
+                Console.WriteLine(a.getDescription());
+            }
+            return aList;
+        }
+        public List<alertTypeObject> getAlertTypeList() {
+            Task<List<alertTypeObject>> task = serverConnection.getAlertTypes();
+            task.Wait();
+            return task.Result;
         }
         public string getDarkModeButtonColor() {
             return darkModeButtonColor;
