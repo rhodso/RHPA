@@ -549,4 +549,3 @@ C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\flata\1CA2E00FF04484C9.flata
 C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\flata\6F98D212708E4E46.flata
 C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\flata\B345DE6C198E1DEE.flata
 C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\android\assets\Newtonsoft.Json.dll
-C:\!Prog\RHPA\RHPA\RHPA.Android\obj\Debug\90\stamp\SetupDependenciesForDesigner.stamp

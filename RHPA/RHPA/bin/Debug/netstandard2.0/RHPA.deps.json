@@ -13,7 +13,6 @@
           "Newtonsoft.Json": "12.0.3",
           "Xamarin.Essentials": "1.3.1",
           "Xamarin.Forms": "4.3.0.908675",
-          "openstack.net": "1.7.8",
           "Mono.Android": "0.0.0.0"
         },
         "runtime": {
@@ -31,14 +30,6 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "12.0.0.0",
             "fileVersion": "12.0.3.23909"
-          }
-        }
-      },
-      "openstack.net/1.7.8": {
-        "runtime": {
-          "lib/net45/openstacknet.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -113,13 +104,6 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
-    },
-    "openstack.net/1.7.8": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-MdD8lFcTYDG3kZPo+kTmVg8Jm1xU9MHjUB6OfEJ2G47KdM4Sv90+acT6XdLATMAHL/tXpj8LEkslFQylpdGcEw==",
-      "path": "openstack.net/1.7.8",
-      "hashPath": "openstack.net.1.7.8.nupkg.sha512"
     },
     "System.Numerics.Vectors/4.5.0": {
       "type": "package",

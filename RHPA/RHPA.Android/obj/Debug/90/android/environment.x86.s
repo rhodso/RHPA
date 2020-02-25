@@ -61,7 +61,7 @@ mono_aot_mode_name:
 	.section	.rodata..L.str.8,"aMS",@progbits,1
 	.type	.L.str.8, @object
 .L.str.8:
-	.asciz	"c338d4f8-ab7c-4965-aa07-5c87675377b6"
+	.asciz	"99712099-6be2-4cfb-b75f-4297a395e0b1"
 	.size	.L.str.8, 37
 	.section	.rodata..L.str.9,"aMS",@progbits,1
 	.type	.L.str.9, @object
@@ -71,8 +71,8 @@ mono_aot_mode_name:
 	.section	.rodata..L.str.10,"aMS",@progbits,1
 	.type	.L.str.10, @object
 .L.str.10:
-	.asciz	"Xamarin.Android.Net.AndroidClientHandler"
-	.size	.L.str.10, 41
+	.asciz	"System.Net.Http.HttpClientHandler"
+	.size	.L.str.10, 34
 	.section	.rodata..L.str.11,"aMS",@progbits,1
 	.type	.L.str.11, @object
 .L.str.11:

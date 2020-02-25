@@ -1,14 +1,10 @@
-﻿using JSIStudios.SimpleRESTServices.Client;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.Sockets;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace RHPA {
     class serverConnection{
@@ -17,10 +13,11 @@ namespace RHPA {
 
         public serverConnection() {
             _client=new HttpClient();
+            _client.Timeout=new TimeSpan(0,0,30);
         }
 
         /*
-        public async Task<object> requestExample() {
+        public static async Task<object> requestExample() {
             var uri = new Uri(url+"WhateverTheEndBitShouldBe");
             var response = await _client.GetAsync(uri);
             if(response.IsSuccessStatusCode) {
@@ -102,42 +99,45 @@ namespace RHPA {
         public static async Task<List<alertTypeObject>> getAlertTypes() {
             //Setup a list for the alert types
             List<alertTypeObject> alertTypes = new List<alertTypeObject>(0);
+            try {
+                //Create the url to go to the API with
+                var uri = new Uri(url+
+                    "?type=alerttypes"
+                    );
 
-            //Create the url to go to the API with
-            var uri = new Uri(url +
-                "?type=alerttypes"
-                );
+                //await the reply
+                var response = await _client.GetAsync(uri);
 
-            //await the reply
-            var response = await _client.GetAsync(uri);
-            
-            //If it worked
-            if(response.IsSuccessStatusCode) {
+                //If it worked
+                if(response.IsSuccessStatusCode) {
 
-                //Read the content, and create a temporary list for the content to go into
-                var content = await response.Content.ReadAsStringAsync();
-                List<alertTypeObject> alertTypeList = new List<alertTypeObject>(0);
+                    //Read the content, and create a temporary list for the content to go into
+                    var content = await response.Content.ReadAsStringAsync();
+                    List<alertTypeObject> alertTypeList = new List<alertTypeObject>(0);
 
-                //Regex pattern to get each individual part of the regex in case it's a list (Which it is here) and get the matches
-                Regex pattern = new Regex("({)([^{}]*)(})");
-                Match match = pattern.Match(content);
+                    //Regex pattern to get each individual part of the regex in case it's a list (Which it is here) and get the matches
+                    Regex pattern = new Regex("({)([^{}]*)(})");
+                    Match match = pattern.Match(content);
 
-                //Create a list for the regex matches
-                List<string> regexMatches = new List<string>(0);
+                    //Create a list for the regex matches
+                    List<string> regexMatches = new List<string>(0);
 
-                //Get all the matches and add them to the list
-                while(match.Success) {
-                    regexMatches.Add(match.Value);
-                    match=match.NextMatch();
+                    //Get all the matches and add them to the list
+                    while(match.Success) {
+                        regexMatches.Add(match.Value);
+                        match=match.NextMatch();
+                    }
+
+                    //For each match, deserialize that into an alertTypeObject, and add to list
+                    foreach(string s in regexMatches) {
+                        alertTypeList.Add(JsonConvert.DeserializeObject<alertTypeObject>(s));
+                    }
+
+                    //Copy the temporary list into this list
+                    alertTypes=alertTypeList;
                 }
-
-                //For each match, deserialize that into an alertTypeObject, and add to list
-                foreach(string s in regexMatches) {
-                    alertTypeList.Add(JsonConvert.DeserializeObject<alertTypeObject>(s));
-                }
-
-                //Copy the temporary list into this list
-                alertTypes=alertTypeList;
+            } catch (Exception ex) {
+                throw ex;
             }
 
             //Return
@@ -165,6 +165,19 @@ namespace RHPA {
                 }
             } else {
                 return int.Parse(response.StatusCode.ToString());
+            }
+        }
+
+        public static async Task<string> testRequest() {
+            try {
+                HttpClient theclient = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
+                string _url = "https://richard.keithsoft.com/proximity/api.php?type=alerttypes";
+                var _uri = new Uri(_url);
+                var response = await theclient.GetStringAsync(_uri);
+                return response;
+
+            } catch (HttpRequestException ex) {
+                throw ex;
             }
         }
     }

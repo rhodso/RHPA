@@ -126,10 +126,6 @@
             "Xamarin.Forms": {
               "target": "Package",
               "version": "[4.3.0.908675, )"
-            },
-            "openstack.net": {
-              "target": "Package",
-              "version": "[1.7.8, )"
             }
           },
           "imports": [
