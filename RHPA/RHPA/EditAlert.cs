@@ -142,7 +142,7 @@ namespace RHPA {
                         f=await DisplayAlert("Error","You already have an active alert. Do you want to cancel it?","Yes","No");
                     }
                     if(f) {
-                        c.setAlert(new Alert(getLat(),getLon(),alertTypePicker.SelectedItem.ToString(),int.Parse(proximityEntry.Text),DateTime.Parse(endTime.Time.ToString()),true));
+                        c.setAlert(new Alert(getLat(),getLon(),alertTypePicker.SelectedItem.ToString(),DateTime.Parse(endTime.Time.ToString()),true));
                         //Then update the website
 
                     }

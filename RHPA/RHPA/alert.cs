@@ -9,26 +9,23 @@ namespace RHPA {
         private string lon;
         private string alertType;
         private User user;
-        private int proximity;
         private DateTime exipryTime;
         private DateTime startTime;
         private bool active;
 
-        public Alert(string lat,string lon,string type,int proximity,DateTime exipryTime) {
+        public Alert(string lat,string lon,string type,DateTime exipryTime) {
             this.lat=lat;
             this.lon=lon;
             this.alertType=type;
-            this.proximity=proximity;
             this.exipryTime=exipryTime;
             this.startTime=DateTime.Now;
             this.active=getActive();
         }
 
-        public Alert(string lat,string lon,string type,int proximity,DateTime exipryTime,bool isActive){
+        public Alert(string lat,string lon,string type,DateTime exipryTime,bool isActive){
             this.lat=lat;
             this.lon=lon;
             this.alertType=type;
-            this.proximity=proximity;
             this.exipryTime=exipryTime;
             this.startTime=DateTime.Now;
             this.active=isActive;
@@ -63,9 +60,6 @@ namespace RHPA {
         public User GetUser() {
             return user;
         }
-        public int GetProximity() {
-            return proximity;
-        }
         public void setID(int _alertID) {
             alertID=_alertID;
         }
@@ -83,9 +77,6 @@ namespace RHPA {
         }
         public void SetUser(User _user) {
             user=_user;
-        }
-        public void SetProximity(int value) {
-            proximity=value;
         }
 
         public static string getAlertTypeNameFromID(int alertTypeID) {

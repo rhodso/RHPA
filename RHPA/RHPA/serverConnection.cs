@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.Android.Net;
 using Xamarin.Forms;
-
+using System.Threading;
 
 namespace RHPA {
     class serverConnection{
@@ -33,8 +33,10 @@ namespace RHPA {
         private static async Task<string> doRequest(string urlSuffix) {
             HttpClient client = new HttpClient(new AndroidClientHandler());
             client.Timeout = TimeSpan.FromSeconds(1);
-            Uri uri = new Uri(url+urlSuffix);
-            string response;
+            string req = url + urlSuffix;
+            Uri uri = new Uri(req);
+            Console.WriteLine("Sending request + \"" + req + "\"");
+            string response = "";
             try
             {
                 response = await client.GetStringAsync(uri);
@@ -42,14 +44,15 @@ namespace RHPA {
             {
                 throw ex;
             }
+            Console.WriteLine("Recieved response \"" + response + "\"");
             return response;
         }
 
         public static int addUser(User u, string name) {
             string urlSuffix = 
-                "?type=adduser &email="+u.getEmail()+
-                " &password="+u.getPassword()+
-                " &name="+name;
+                "?type=adduser&email="+u.getEmail()+
+                "&password="+u.getPassword()+
+                "&name="+name;
             Task<string> task = doRequest(urlSuffix);
             task.Wait();
             string response = task.Result;
@@ -66,8 +69,8 @@ namespace RHPA {
         public static int clearAllAlerts(User u) {
             string urlSuffix = 
                 "?type=clearalerts" + 
-                " &email="+u.getEmail()+
-                " &password="+u.getPassword();
+                "&email="+u.getEmail()+
+                "&password="+u.getPassword();
             Task<string> task = doRequest(urlSuffix);
             task.Wait();
             string response = task.Result;
@@ -84,31 +87,36 @@ namespace RHPA {
         public static int createNewAlert(Alert a, User u) {
             string urlSuffix = 
                 "?type=addalert&email=" + u.getEmail() + 
-                " &password=" + u.getPassword() +
-                " &alerttypeid=" + Alert.getAlertTypeIDFromName(a.GetAlertType()) +
-                " &description=" + a.GetAlertType() +
-                " &lat=" + a.GetLat() +
-                " &lng=" + a.GetLon() + 
-                " &radius=" + a.GetProximity() +
-                " &enddate=" + a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss");
-            Task<string> task = doRequest(urlSuffix);
-            task.Wait();
-            string response = task.Result;
+                "&password=" + u.getPassword() +
+                "&alerttypeid=" + Alert.getAlertTypeIDFromName(a.GetAlertType()) +
+                "&description=" + a.GetAlertType() +
+                "&lat=" + a.GetLat() +
+                "&lng=" + a.GetLon() + 
+                "&enddate=" + a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss");
+            HttpClient client = new HttpClient(new AndroidClientHandler());
+            client.Timeout = TimeSpan.FromSeconds(1);
+            string req = url + urlSuffix;
+            Uri uri = new Uri(req);
+            Console.WriteLine("Sending request + \"" + req + "\"\nNo response expected");
+            client.GetAsync(uri);
+            /*
             try {
                 int alertID=int.Parse(response);
                 return alertID;
             } catch (Exception ex) {
                 throw ex;
             }
+            */
+            return 1;
         }
 
         public static List<tempAlertHolding> getAlertList(string lat, string lon) {
             List<tempAlertHolding> alertList;
             string urlSuffix =
-                "?type=alerts "+ 
-                " &lat=" + lat +  
-                " &lng=-2.280 " + lon + 
-                " &radius=500 ";
+                "?type=alerts"+ 
+                "&lat=" + lat +  
+                "&lng=" + lon + 
+                "&radius=500";
             Task<string> task = doRequest(urlSuffix);
             task.Wait();
             string response = task.Result;
@@ -132,7 +140,7 @@ namespace RHPA {
                     task.Wait();
                     string response = task.Result;
                     */
-                
+
                     /*
                     string response = "[
                     {\"AlertTypeID\":4,\"Description\":\"Flood\"},
@@ -141,6 +149,9 @@ namespace RHPA {
                     {\"AlertTypeID\":1,\"Description\":\"Road Traffic Accident\"}]";
                     List<alertTypeObject> tempAlertTypeList = JsonConvert.DeserializeObject<List<alertTypeObject>>(response);
                     */
+
+                    Random random = new Random();
+                    Thread.Sleep(1000 + random.Next(50, 750));
 
                     List<alertTypeObject> tempAlertTypeList = new List<alertTypeObject>();
                     tempAlertTypeList.Add(new alertTypeObject(4,"Flood"));
@@ -165,12 +176,12 @@ namespace RHPA {
             //api.php?type=updatealert &email= &password= &lat=53 &lng=-2 &alertid=&enddate=2020-02-21+20%3A28
             string urlSuffix =
                 "?type=alerttypes"+ 
-                " &email=" + u.getEmail() + 
-                " &password=" + u.getPassword() + 
-                " &lat=" + a.GetLat() + 
-                " &lng=" + a.GetLon() + 
-                " &alertid=" + a.getID() +
-                " &enddate="+a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss");
+                "&email=" + u.getEmail() + 
+                "&password=" + u.getPassword() + 
+                "&lat=" + a.GetLat() + 
+                "&lng=" + a.GetLon() + 
+                "&alertid=" + a.getID() +
+                "&enddate="+a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss");
             Task<string> task = doRequest(urlSuffix);
             task.Wait();
             string response = task.Result;

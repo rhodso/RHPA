@@ -188,9 +188,10 @@ namespace RHPA {
                         f = await DisplayAlert("Error","You already have an active alert. Do you want to cancel it?","Yes","No");   
                     }
                     if(f) {
-                        c.setAlert(new Alert(getLat(),getLon(),alertTypePicker.SelectedItem.ToString(),int.Parse(proximityEntry.Text),DateTime.Parse(endTime.Time.ToString()),true));
+                        Alert theAlert = new Alert(getLat(), getLon(), alertTypePicker.SelectedItem.ToString(), DateTime.Parse(endTime.Time.ToString()), true);
+                        //c.setAlert(theAlert);
                         //Then update the website
-
+                        serverConnection.createNewAlert(theAlert, new User("rtrhodes1997@gmail.com", "p122a"));
                     }
                 } catch(Exception e) {
                     await DisplayAlert("Error","Could not create alert\n" + e.Message,"OK");

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Timers;
 
 namespace RHPA {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -19,7 +20,7 @@ namespace RHPA {
         private readonly string darkModeButtonColor = "4F4F4F";
         private readonly string lightModeButtonColor = "AAAAAA";
         private bool lightMode;
-
+        
         //UI Elements
         private Image logoImage;
         private Button newAlert;
@@ -29,6 +30,8 @@ namespace RHPA {
         
         public MainPage()
         {
+            //List<tempAlertHolding> list = serverConnection.getAlertList(locationHandler.getLatidute(),locationHandler.getLongitude());
+
             if(!locationHandler.testLocation()) {
                 BackgroundColor=Color.Gray;
                 StackLayout sl = new StackLayout();

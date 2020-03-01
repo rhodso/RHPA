@@ -107,7 +107,7 @@ namespace RHPA {
             DateTime expiryTime;
             expiryTime=DateTime.Now;
             expiryTime.AddSeconds(60*(int.Parse(endTime.Text)));
-            c.setDefAlert(new Alert(null,null,alertTypePicker.SelectedIndex.ToString(),int.Parse(proximityEntry.Text), expiryTime));
+            c.setDefAlert(new Alert(null,null,alertTypePicker.SelectedIndex.ToString(), expiryTime));
         }
     }
 }

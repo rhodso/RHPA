@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-
+using System.Threading.Tasks;
+using System.Timers;
 using Xamarin.Forms;
 
 namespace RHPA {
@@ -14,11 +15,14 @@ namespace RHPA {
         List<View> gridViews;
         List<string> alertTypes;
         Label alertsLabel;
+        ScrollView alertsListView;
+        private Timer locationTimer;
 
         private readonly string darkModeButtonColor = "4F4F4F";
         private readonly string lightModeButtonColor = "AAAAAA";
 
         public DrivingMode() {
+            NavigationPage.SetHasNavigationBar(this, false);
             Content=BuildContent();
             alertTypes=c.getAlertTypeDescriptions();
 
@@ -78,51 +82,56 @@ namespace RHPA {
             //Add the grid
             content.Children.Add(grid);
 
+            alertsListView = new ScrollView();
+
             Label alertsLabel = new Label() { Text="App is in driving mode\nYou will be audibly alerted to any hazards as to not distract you while driving",HorizontalOptions=LayoutOptions.FillAndExpand,VerticalOptions=LayoutOptions.StartAndExpand,Margin=5,TextColor=textCol,FontSize=18,VerticalTextAlignment=TextAlignment.Start };
             content.Children.Add(alertsLabel);
-                
+
+            Button backButton = new Button() { Text = "Back" };
+            if (c.getLightMode())
+            {
+                backButton.BackgroundColor = Color.FromHex(lightModeButtonColor);
+                backButton.TextColor = Color.Black;
+            }
+            else
+            {
+                backButton.BackgroundColor = Color.FromHex(darkModeButtonColor);
+                backButton.TextColor = Color.White;
+            }
+            backButton.Clicked += BackButton_Clicked;
+            content.Children.Add(backButton);
+
+            startTimer();
+
             return content;
         }
 
-        
-        /*
-        void checkForUpdate() {
-            string decodedReply = null;
-            try {
-                //Recieve reply
-                string reply = conn.sendRevcMessage("1|"+getLon()+"|"+getLat());
-
-                //Split up hazards
-                string[] hazards = reply.Split('|');
-
-                List<string[]> hazardsList = new List<string[]>(0);
-
-                foreach(string s in hazards) {
-                    //hazardsList.Add(s.Split(','));
-                    List<string> hazardInfo = new List<string>(0);
-                    string[] str = s.Split(',');
-                    foreach(string stri in str) {
-                        hazardInfo.Add(stri);
-                    }
-                    try {
-                        hazardInfo.Add(DistanceAlgorithm.DistanceBetweenPlaces(
-                            double.Parse(str[0]),
-                            double.Parse(str[1]),
-                            double.Parse(getLat()),
-                            double.Parse(getLon())).ToString());
-                    } catch(Exception ex) { }
-                    hazardsList.Add(hazardInfo.ToArray());
-                }
-
-            } catch(ArgumentNullException e) {
-                    //Handle this somehow
-            } catch(SocketException e) {
-                   //Handle this somehow
-            }
-
-            alertsLabel.Text=decodedReply;
+        private void BackButton_Clicked(object sender, EventArgs e)
+        {
+            stopTimer();
+            Navigation.PopAsync();
         }
-        */
+
+        private void startTimer()
+        {
+            locationTimer = new Timer();
+            locationTimer.Interval = 5000;
+            locationTimer.Elapsed += async (sender, e) => await timerEvent();
+            locationTimer.Start();
+        }
+
+        private void stopTimer()
+        {
+            locationTimer.Stop();
+        }
+
+        private async Task<int> timerEvent()
+        {
+            await Task.Run(locationHandler.getLocation);
+            List<tempAlertHolding> alertList = serverConnection.getAlertList(getLat(), getLon());
+            
+            return 1;
+        }        
 
         private string getLon() {
             return locationHandler.getLongitude();

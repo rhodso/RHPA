@@ -12,7 +12,7 @@ namespace RHPA {
 
             //Initialise control vars
             ControlVars c = new ControlVars();
-            c.setAlert(new Alert("NONE","NONE","NONE",0,DateTime.Now,false));
+            c.setAlert(new Alert("NONE","NONE","NONE",DateTime.Now,false));
 
             //Initialise server connection
             serverConnection conn = new serverConnection();
