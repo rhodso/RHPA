@@ -1,10 +1,6 @@
-﻿using Android.Content;
-using Android.Locations;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using System.Timers;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace RHPA {
     public partial class App : Application {
@@ -20,11 +16,13 @@ namespace RHPA {
 
             //Initialise server connection
             serverConnection conn = new serverConnection();
+            
+            /*
             Task<string> task = serverConnection.testRequest();
             task.Wait();
             string x = task.Result;
-
             Console.WriteLine(x);
+            */
 
             //MainPage = new MainPage();
             MainPage=new NavigationPage(new MainPage());

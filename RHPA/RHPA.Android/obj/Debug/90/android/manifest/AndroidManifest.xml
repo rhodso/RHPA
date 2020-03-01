@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.rhpa" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.rhpa">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
+  <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-feature android:name="android.hardware.location" android:required="false" />
-  <uses-feature android:name="android.hardware.location.gps" android:required="false" />
-  <uses-feature android:name="android.hardware.location.network" android:required="false" />
   <application android:label="RHPA.Android" android:name="android.app.Application" android:allowBackup="true" android:icon="@mipmap/icon" android:debuggable="true">
     <activity android:configChanges="orientation|screenSize" android:icon="@mipmap/icon" android:label="RHPA" android:theme="@style/MainTheme" android:name="crc648bf1589d2aed53ee.MainActivity">
       <intent-filter>
@@ -33,10 +28,5 @@
         <category android:name="mono.android.intent.category.SEPPUKU.com.companyname.rhpa" />
       </intent-filter>
     </receiver>
-    <activity android:name="com.google.android.gms.common.api.GoogleApiActivity" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-    <!-- Needs to be explicitly declared on P+ -->
-    <uses-library android:name="org.apache.http.legacy" android:required="false" />
   </application>
-  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 </manifest>

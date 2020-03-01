@@ -6,10 +6,13 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace RHPA {
     class serverConnection{
         private static HttpClient _client;
-        private static readonly string url = "http://richard.keithsoft.com/proximity/api.php";
+        private static readonly string url = "https://richard.keithsoft.com/proximity/api.php";
+
+        private static List<alertTypeObject> alertTypeList;
 
         public serverConnection() {
             _client=new HttpClient();
@@ -18,49 +21,59 @@ namespace RHPA {
 
         /*
         public static async Task<object> requestExample() {
-            var uri = new Uri(url+"WhateverTheEndBitShouldBe");
-            var response = await _client.GetAsync(uri);
-            if(response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
-            } else {
-                return response.StatusCode.ToString();
-            }
+            string urlSuffex = "";
+            Task<string> task = doRequest(urlSuffix);
+            task.Wait();
+            string response = task.Result;
+            //Do response processing
         }
         */
 
-        public static async Task<int> addUser(User u, string name) {
-            var uri = new Uri(url + 
+        private static async Task<string> doRequest(string urlSuffix) {
+            HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
+            Uri uri = new Uri(url+urlSuffix);
+            string response = await client.GetStringAsync(uri);
+            return response;
+        }
+
+        public static int addUser(User u, string name) {
+            string urlSuffix = 
                 "?type=adduser &email="+u.getEmail()+
                 " &password="+u.getPassword()+
-                " &name="+name
-                );
-            var response = await _client.GetAsync(uri);
-            if(response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
+                " &name="+name;
+            Task<string> task = doRequest(urlSuffix);
+            task.Wait();
+            string response = task.Result;
+
+            if(response.Equals("OK")) {
                 return 1;
+            } else if(response.Equals("User already exists")) {
+                return 0;
             } else {
-                return int.Parse(response.StatusCode.ToString());
+                return -1;
             }
         }
 
-        public static async Task<int> clearAllAlerts(User u) {
-            var uri = new Uri(url +
+        public static int clearAllAlerts(User u) {
+            string urlSuffix = 
                 "?type=clearalerts" + 
                 " &email="+u.getEmail()+
-                " &password="+u.getPassword()
-                );
-            var response = await _client.GetAsync(uri);
-            if(response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
+                " &password="+u.getPassword();
+            Task<string> task = doRequest(urlSuffix);
+            task.Wait();
+            string response = task.Result;
+
+            if(response.Equals("OK")) {
                 return 1;
+            } else if(response.Equals("Bad email or password")) {
+                return 0;
             } else {
-                return int.Parse(response.StatusCode.ToString());
+                return -1;
             }
         }
 
-        public static async Task<int> createNewAlert(Alert a, User u) {
-            var uri = new Uri(url +
+        public static int createNewAlert(Alert a, User u) {
+            string urlSuffix = 
                 "?type=addalert&email=" + u.getEmail() + 
                 " &password=" + u.getPassword() +
                 " &alerttypeid=" + Alert.getAlertTypeIDFromName(a.GetAlertType()) +
@@ -68,103 +81,79 @@ namespace RHPA {
                 " &lat=" + a.GetLat() +
                 " &lng=" + a.GetLon() + 
                 " &radius=" + a.GetProximity() +
-                " &enddate=" + a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss")
-                );
-            var response = await _client.GetAsync(uri);
-            if(response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
-                return 1;
-            } else {
-                return int.Parse(response.StatusCode.ToString());
-            }
-        }
-
-        public static async Task<List<Alert>> getAlertListAsync(string lat, string lon) {
-            List<Alert> alertList = new List<Alert>(0);
-            var uri = new Uri(url +
-                "?type=alerts " + 
-                " &lat=" + lat +  
-                " &lng=-2.280 " + lon + 
-                " &radius=500 "
-                );
-            var response = await _client.GetAsync(uri);
-            if(response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
-                
-            }
-
-            return alertList;
-        }
-
-        public static async Task<List<alertTypeObject>> getAlertTypes() {
-            //Setup a list for the alert types
-            List<alertTypeObject> alertTypes = new List<alertTypeObject>(0);
+                " &enddate=" + a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss");
+            Task<string> task = doRequest(urlSuffix);
+            task.Wait();
+            string response = task.Result;
             try {
-                //Create the url to go to the API with
-                var uri = new Uri(url+
-                    "?type=alerttypes"
-                    );
-
-                //await the reply
-                var response = await _client.GetAsync(uri);
-
-                //If it worked
-                if(response.IsSuccessStatusCode) {
-
-                    //Read the content, and create a temporary list for the content to go into
-                    var content = await response.Content.ReadAsStringAsync();
-                    List<alertTypeObject> alertTypeList = new List<alertTypeObject>(0);
-
-                    //Regex pattern to get each individual part of the regex in case it's a list (Which it is here) and get the matches
-                    Regex pattern = new Regex("({)([^{}]*)(})");
-                    Match match = pattern.Match(content);
-
-                    //Create a list for the regex matches
-                    List<string> regexMatches = new List<string>(0);
-
-                    //Get all the matches and add them to the list
-                    while(match.Success) {
-                        regexMatches.Add(match.Value);
-                        match=match.NextMatch();
-                    }
-
-                    //For each match, deserialize that into an alertTypeObject, and add to list
-                    foreach(string s in regexMatches) {
-                        alertTypeList.Add(JsonConvert.DeserializeObject<alertTypeObject>(s));
-                    }
-
-                    //Copy the temporary list into this list
-                    alertTypes=alertTypeList;
-                }
+                int alertID=int.Parse(response);
+                return alertID;
             } catch (Exception ex) {
                 throw ex;
             }
-
-            //Return
-            return alertTypes;
         }
 
-        public static async Task<int> updateAlert(User u,Alert a) {
+        public static List<tempAlertHolding> getAlertList(string lat, string lon) {
+            List<tempAlertHolding> alertList;
+            string urlSuffix =
+                "?type=alerts "+ 
+                " &lat=" + lat +  
+                " &lng=-2.280 " + lon + 
+                " &radius=500 ";
+            Task<string> task = doRequest(urlSuffix);
+            task.Wait();
+            string response = task.Result;
+            alertList=JsonConvert.DeserializeObject<List<tempAlertHolding>>(response);
+            return alertList;
+        }
+
+        public static List<alertTypeObject> getAlertTypes() {
+            if(alertTypeList!=null) {
+                return alertTypeList;
+            } else {
+                List<alertTypeObject> alertTypes;
+                //HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
+
+                string urlSuffix = "?type=alerttypes";
+                try {
+                    //await the reply
+                    Task<string> task = doRequest(urlSuffix);
+                    task.Wait();
+                    string response = task.Result;
+                    List<alertTypeObject> tempAlertTypeList = JsonConvert.DeserializeObject<List<alertTypeObject>>(response);
+
+                    //Copy the temporary list into lists
+                    alertTypeList=tempAlertTypeList;
+                    alertTypes=tempAlertTypeList;
+
+                } catch(Exception ex) {
+                    throw ex;
+                }
+
+                //Return
+                return alertTypes;
+            }
+        }
+
+        public static int updateAlert(User u,Alert a) {
             //api.php?type=updatealert &email= &password= &lat=53 &lng=-2 &alertid=&enddate=2020-02-21+20%3A28
-            var uri = new Uri(url +
-                "?type=alerttypes" + 
+            string urlSuffix =
+                "?type=alerttypes"+ 
                 " &email=" + u.getEmail() + 
                 " &password=" + u.getPassword() + 
                 " &lat=" + a.GetLat() + 
                 " &lng=" + a.GetLon() + 
                 " &alertid=" + a.getID() +
-                " &enddate="+a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss")
-                );
-            var response = await _client.GetAsync(uri);
-            if(response.IsSuccessStatusCode) {
-                var content = await response.Content.ReadAsStringAsync();
-                if(content.Equals("OK")) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                " &enddate="+a.GetExipryTime().ToString("yyyy-MM-dd HH:mm:ss");
+            Task<string> task = doRequest(urlSuffix);
+            task.Wait();
+            string response = task.Result;
+            if(response.Equals("OK")) {
+                return 1;
+            } else if(response.Equals("Bad email or password")) {
+                return 0;
             } else {
-                return int.Parse(response.StatusCode.ToString());
+                return -1;
             }
         }
 
@@ -175,7 +164,6 @@ namespace RHPA {
                 var _uri = new Uri(_url);
                 var response = await theclient.GetStringAsync(_uri);
                 return response;
-
             } catch (HttpRequestException ex) {
                 throw ex;
             }

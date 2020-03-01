@@ -13,6 +13,10 @@ namespace RHPA {
         private string lightModeButtonColor = "AAAAAA";
         private List<alertTypeObject> alertTypes;
 
+        public ControlVars() {
+            alertTypes=getAlertTypeList();
+        }
+
         //Getters
         public bool getLightMode() {
             return lightMode;
@@ -26,18 +30,9 @@ namespace RHPA {
         public List<string> getAlertTypeDescriptions() {
             List<string> aList = new List<string>();
 
-            /*
-            //Temporary            
-            aList.Add("Road Traffic Accident");
-            aList.Add("Horse Riders");
-            aList.Add("Hedge Cutter");
-            aList.Add("Flood");
-            aList.Add("Other");
-            return aList;
-            */
-
-            //Get from server
-            List<alertTypeObject> alertTypeObjects = getAlertTypeList();
+            //Get from stored value
+            alertTypes=serverConnection.getAlertTypes();
+            List<alertTypeObject> alertTypeObjects = alertTypes;
             foreach(alertTypeObject a in alertTypeObjects) {
                 aList.Add(a.getDescription());
                 Console.WriteLine(a.getDescription());
@@ -45,9 +40,7 @@ namespace RHPA {
             return aList;
         }
         public List<alertTypeObject> getAlertTypeList() {
-            Task<List<alertTypeObject>> task = serverConnection.getAlertTypes();
-            task.Wait();
-            return task.Result;
+            return serverConnection.getAlertTypes();
         }
         public string getDarkModeButtonColor() {
             return darkModeButtonColor;
