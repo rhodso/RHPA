@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Xamarin.Android.Net;
 using Xamarin.Forms;
 
 
@@ -30,7 +31,8 @@ namespace RHPA {
         */
 
         private static async Task<string> doRequest(string urlSuffix) {
-            HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
+//            HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
+HttpClient client = new HttpClient(new AndroidClientHandler());
             Uri uri = new Uri(url+urlSuffix);
             string response = await client.GetStringAsync(uri);
             return response;
