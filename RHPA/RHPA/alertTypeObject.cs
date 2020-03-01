@@ -7,6 +7,12 @@ namespace RHPA {
         private int alertTypeID;
         private string description;
 
+        public alertTypeObject(int alertTypeID, string description)
+        {
+            this.alertTypeID = alertTypeID;
+            this.description = description ?? throw new ArgumentNullException(nameof(description));
+        }
+
         public int getAlertTypeID() {
             return this.alertTypeID;
         }

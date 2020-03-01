@@ -31,10 +31,17 @@ namespace RHPA {
         */
 
         private static async Task<string> doRequest(string urlSuffix) {
-//            HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
-HttpClient client = new HttpClient(new AndroidClientHandler());
+            HttpClient client = new HttpClient(new AndroidClientHandler());
+            client.Timeout = TimeSpan.FromSeconds(1);
             Uri uri = new Uri(url+urlSuffix);
-            string response = await client.GetStringAsync(uri);
+            string response;
+            try
+            {
+                response = await client.GetStringAsync(uri);
+            } catch (Exception ex)
+            {
+                throw ex;
+            }
             return response;
         }
 
@@ -117,16 +124,33 @@ HttpClient client = new HttpClient(new AndroidClientHandler());
                 //HttpClient client = new HttpClient(new Xamarin.Android.Net.AndroidClientHandler());
 
                 string urlSuffix = "?type=alerttypes";
-                try {
+                try
+                {
                     //await the reply
+                    /*
                     Task<string> task = doRequest(urlSuffix);
                     task.Wait();
                     string response = task.Result;
+                    */
+                
+                    /*
+                    string response = "[
+                    {\"AlertTypeID\":4,\"Description\":\"Flood\"},
+                    {\"AlertTypeID\":3,\"Description\":\"Hedge Cutter\"},
+                    {\"AlertTypeID\":2,\"Description\":\"Horse Riders\"},
+                    {\"AlertTypeID\":1,\"Description\":\"Road Traffic Accident\"}]";
                     List<alertTypeObject> tempAlertTypeList = JsonConvert.DeserializeObject<List<alertTypeObject>>(response);
+                    */
 
+                    List<alertTypeObject> tempAlertTypeList = new List<alertTypeObject>();
+                    tempAlertTypeList.Add(new alertTypeObject(4,"Flood"));
+                    tempAlertTypeList.Add(new alertTypeObject(3,"Hedge Cutter"));
+                    tempAlertTypeList.Add(new alertTypeObject(2,"Horse Riders"));
+                    tempAlertTypeList.Add(new alertTypeObject(1,"Road Traffic Accident"));
+                    
                     //Copy the temporary list into lists
-                    alertTypeList=tempAlertTypeList;
-                    alertTypes=tempAlertTypeList;
+                    alertTypeList = tempAlertTypeList;
+                    alertTypes= tempAlertTypeList;
 
                 } catch(Exception ex) {
                     throw ex;
