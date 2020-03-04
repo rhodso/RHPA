@@ -195,8 +195,6 @@ namespace RHPA {
             return layout;
         }
 
-        
-
         async private void NewAlertAction(object Sender, EventArgs args)
         {
             //DisplayAlert("Button pressed", "'New Alert' button pressed", "OK");

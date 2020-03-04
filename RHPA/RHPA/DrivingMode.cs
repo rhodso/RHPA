@@ -17,6 +17,7 @@ namespace RHPA {
         Label alertsLabel;
         ScrollView alertsListView;
         private Timer locationTimer;
+        Grid alertsGrid;
 
         private readonly string darkModeButtonColor = "4F4F4F";
         private readonly string lightModeButtonColor = "AAAAAA";
@@ -37,8 +38,22 @@ namespace RHPA {
             //Create content
             StackLayout content = new StackLayout();
 
+            Button backButton = new Button() { Text = "Back" };
+            if (c.getLightMode())
+            {
+                backButton.BackgroundColor = Color.FromHex(lightModeButtonColor);
+                backButton.TextColor = Color.Black;
+            }
+            else
+            {
+                backButton.BackgroundColor = Color.FromHex(darkModeButtonColor);
+                backButton.TextColor = Color.White;
+            }
+            backButton.Clicked += BackButton_Clicked;
+            content.Children.Add(backButton);
+
             //Create a list of views and a grid for the views
-            gridViews=new List<View>();
+            gridViews =new List<View>();
             var grid = new Grid {
                 HeightRequest=750,
                 WidthRequest=500
@@ -83,23 +98,23 @@ namespace RHPA {
             content.Children.Add(grid);
 
             alertsListView = new ScrollView();
+            
+            //alerts grid
+            alertsGrid = new Grid();
+            alertsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            alertsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            alertsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            List<View> alertsGridViews = new List<View>(0);
+            alertsGridViews.Add(new Label { Text = "Alert", TextColor = textCol, FontSize = 18, MinimumHeightRequest = 20, VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.FillAndExpand });
+            alertsGridViews.Add(new Label { Text = "Distance", TextColor = textCol, FontSize = 18, MinimumHeightRequest = 20, VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.FillAndExpand });
+            
+
+
+            alertsListView.Content = alertsGrid;
 
             Label alertsLabel = new Label() { Text="App is in driving mode\nYou will be audibly alerted to any hazards as to not distract you while driving",HorizontalOptions=LayoutOptions.FillAndExpand,VerticalOptions=LayoutOptions.StartAndExpand,Margin=5,TextColor=textCol,FontSize=18,VerticalTextAlignment=TextAlignment.Start };
             content.Children.Add(alertsLabel);
-
-            Button backButton = new Button() { Text = "Back" };
-            if (c.getLightMode())
-            {
-                backButton.BackgroundColor = Color.FromHex(lightModeButtonColor);
-                backButton.TextColor = Color.Black;
-            }
-            else
-            {
-                backButton.BackgroundColor = Color.FromHex(darkModeButtonColor);
-                backButton.TextColor = Color.White;
-            }
-            backButton.Clicked += BackButton_Clicked;
-            content.Children.Add(backButton);
 
             startTimer();
 
@@ -132,6 +147,15 @@ namespace RHPA {
             
             return 1;
         }        
+
+        private void updateAlertList(List<tempAlertHolding> alertList)
+        {
+
+            foreach (tempAlertHolding a in alertList)
+            {
+
+            }
+        }
 
         private string getLon() {
             return locationHandler.getLongitude();

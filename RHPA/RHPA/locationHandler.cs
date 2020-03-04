@@ -16,14 +16,18 @@ namespace RHPA {
 
         public static async void getLocation() {
             try {
+                
                 /*
                 var request = new GeolocationRequest(GeolocationAccuracy.High);
                 Xamarin.Essentials.Location location = await Geolocation.GetLocationAsync(request);
                 */
                 
+                
                 Location location = new Location();
                 location.Latitude = 53.110691;
                 location.Longitude = -2.380795;
+                
+
                 Random random = new Random();
                 Thread.Sleep(1000 + random.Next(50, 750));
 

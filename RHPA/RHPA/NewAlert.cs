@@ -10,7 +10,6 @@ namespace RHPA {
         ControlVars c = new ControlVars();
         List<View> gridViews;
         Picker alertTypePicker;
-        Entry proximityEntry;
         Entry durationEntry;
         TimePicker endTime;
         List<string> alertTypes;
@@ -90,7 +89,6 @@ namespace RHPA {
                 items.Add(s);
             }
             alertTypePicker.ItemsSource=items;
-            proximityEntry=new Entry { Keyboard=Keyboard.Numeric,Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand };
 
             //Add views
             gridViews.Add(new Label { Text="Latitude",Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
@@ -99,8 +97,6 @@ namespace RHPA {
             gridViews.Add(new Label { Text=getLon(),Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
             gridViews.Add(new Label { Text="Alert type",Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
             gridViews.Add(alertTypePicker);
-            gridViews.Add(new Label { Text="Proximity (m)",Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
-            gridViews.Add(proximityEntry);
             gridViews.Add(new Label { Text="End time",Margin=5,TextColor=textCol,FontSize=18,MinimumHeightRequest=20,VerticalOptions=LayoutOptions.Center,HorizontalOptions=LayoutOptions.FillAndExpand });
             gridViews.Add(endTime);
 
@@ -113,15 +109,12 @@ namespace RHPA {
             grid.Children.Add(gridViews[5],1,2);
             grid.Children.Add(gridViews[6],0,3);
             grid.Children.Add(gridViews[7],1,3);
-            grid.Children.Add(gridViews[8],0,4);
-            grid.Children.Add(gridViews[9],1,4);
 
             //Set Spans
             Grid.SetColumnSpan(gridViews[1],2);
             Grid.SetColumnSpan(gridViews[3],2);
             Grid.SetColumnSpan(gridViews[5],2);
             Grid.SetColumnSpan(gridViews[7],2);
-            Grid.SetColumnSpan(gridViews[9],2);
 
             //Add the grid
             content.Children.Add(grid);
@@ -168,10 +161,6 @@ namespace RHPA {
             if(alertTypePicker.SelectedItem.ToString().Equals("")) {
                 errorStr+="Alert type not set\n";
             }
-            if(proximityEntry.Text.Equals("")) {
-                errorStr+="Proximity not set\n";
-            }
-            
             if(endTime.Time <= c.dateTimeToTimeSpan(DateTime.Now)) {
                 errorStr+="End time is before start time\n";
             }
